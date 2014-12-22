@@ -1,5 +1,7 @@
 package ross.chip8;
 
+import android.util.Log;
+
 public class C8opcodes {
 
 	Chip8 c8System;
@@ -527,7 +529,7 @@ void op_DXYN()
 /*Skips the next instruction if the key stored in VX is pressed*/
 void op_EX9E()
 {
-    if(c8System.key_pressed[c8System.V[get_X()]] != 0) {
+    if(c8System.get_key_pressed(c8System.V[get_X()])) {
     	c8System.pc+=2; 
     	c8System.pc &=0xFFF;
     }
@@ -536,11 +538,10 @@ void op_EX9E()
 /*Skips the next instruction if the key stored in VX isn't pressed*/
 void op_EXA1()
 {
-    if(c8System.key_pressed[c8System.V[get_X()]] == 0) {
-    	c8System.pc+=2;
-    	c8System.pc &=0xFFF;
+    if(!c8System.get_key_pressed(c8System.V[get_X()])) {
+        c8System.pc += 2;
+        c8System.pc &= 0xFFF;
     }
-      
 }
 
 /*Sets VX to the value of the delaytimer*/
@@ -553,7 +554,7 @@ void op_FX07()
 void op_FX0A()
 {
 	//wait_for_keypress();
-	c8System.V[get_X()] = c8System.key_pressed[16]; //Last key pressed stored in key_pressed index 16
+	c8System.V[get_X()] = 0; //c8System.get_key_pressed(0); //TODO
 }
 
 /*Sets delay timer to VX*/

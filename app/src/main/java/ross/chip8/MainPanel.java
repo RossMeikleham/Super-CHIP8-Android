@@ -5,11 +5,20 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ToggleButton;
+
+import java.util.ArrayList;
 
 public class MainPanel extends SurfaceView implements
         SurfaceHolder.Callback {
@@ -18,27 +27,38 @@ public class MainPanel extends SurfaceView implements
     Integer gfx[][];
     MainThread thread;
     Context context;
+    Chip8 c8;
+
+
     int width;
     int height;
 
-    public MainPanel(Context context) {
-        super(context);
+    public MainPanel(Context context, AttributeSet attrs, int defStyle) {
+        this(context, attrs);
+    }
+
+    public MainPanel(Context context, AttributeSet attrs) {
+        super(context, attrs);
         this.context = context;
+
         // adding the callback (this) to the surface holder to intercept events
         getHolder().addCallback(this);
         // make the GamePanel focusable so it can handle events
         setFocusable(true);
         setWillNotDraw(false);
 
-        Chip8 c8 = new Chip8();
-        gfx = c8.gfx;
+        // Setup Emulation
+        this.c8 = new Chip8();
+        this.gfx = c8.gfx;
         C8opcodes c8Op = new C8opcodes(c8);
         Cpu c = new Cpu(context, "INVADERS" , c8, c8Op);
 
         paint = new Paint();
-        thread = new MainThread(getHolder(), this, c, c8);
-
+        thread = new MainThread(this, c, c8);
+        Log.w("PAINT", paint.toString());
     }
+
+
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {

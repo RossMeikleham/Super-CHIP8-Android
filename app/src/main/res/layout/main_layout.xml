@@ -1,29 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1"
-    android:id="@+id/">
-
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"></TableLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="bottom"></LinearLayout>
-
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"></TableLayout>
-
-    <GridLayout
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <ross.chip8.MainPanel
+        android:id="@+id/main_panel"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
+    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        >
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -121,7 +109,7 @@
             android:layout_width="97dp"
             android:layout_height="wrap_content"
             android:text="A"
-            android:id="@+id/buttonA"
+            android:id="@+id/button10"
             android:layout_row="33"
             android:layout_column="2" />
 
@@ -130,7 +118,7 @@
             android:layout_width="97dp"
             android:layout_height="wrap_content"
             android:text="B"
-            android:id="@+id/buttonB"
+            android:id="@+id/button11"
             android:layout_row="33"
             android:layout_column="3" />
 
@@ -139,7 +127,7 @@
             android:layout_width="97dp"
             android:layout_height="wrap_content"
             android:text="C"
-            android:id="@+id/buttonC"
+            android:id="@+id/button12"
             android:layout_row="34"
             android:layout_column="0" />
 
@@ -148,7 +136,7 @@
             android:layout_width="97dp"
             android:layout_height="wrap_content"
             android:text="D"
-            android:id="@+id/buttonD"
+            android:id="@+id/button13"
             android:layout_row="34"
             android:layout_column="1" />
 
@@ -157,7 +145,7 @@
             android:layout_width="97dp"
             android:layout_height="wrap_content"
             android:text="E"
-            android:id="@+id/buttonE"
+            android:id="@+id/button14"
             android:layout_row="34"
             android:layout_column="2" />
 
@@ -166,9 +154,9 @@
             android:layout_width="97dp"
             android:layout_height="wrap_content"
             android:text="F"
-            android:id="@+id/buttonF"
+            android:id="@+id/button15"
             android:layout_row="34"
             android:layout_column="3" />
     </GridLayout>
 
-</LinearLayout>
+</FrameLayout>

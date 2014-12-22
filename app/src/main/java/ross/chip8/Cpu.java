@@ -18,7 +18,8 @@ public class Cpu {
 Chip8 c8System;
 C8opcodes c8Op;
 Context context;
-	
+
+
 public Cpu(Context c, String fileName, Chip8 c8, C8opcodes op) {
 	c8System = c8;
 	c8Op = op;
@@ -30,7 +31,7 @@ public Cpu(Context c, String fileName, Chip8 c8, C8opcodes op) {
 void load_program(String filename)
 {
     int startMem =  0x200;
-    int count,fileLen = 0;
+    int fileLen = 0;
 
     AssetManager am = context.getAssets();
 	 
@@ -40,7 +41,8 @@ void load_program(String filename)
 		fileLen = f.available();
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
-		e.printStackTrace();
+		//e.printStackTrace();
+
 	}
     
     
@@ -168,12 +170,6 @@ boolean step() {
     }
 
     return c8System.end == 1;
-}
-
-void romDump() {
-	for(int i = 0x200; i < 0x300; i++) {
-		System.out.printf("%X %X\n",i,c8System.mem[i]);
-	}
 }
 
 

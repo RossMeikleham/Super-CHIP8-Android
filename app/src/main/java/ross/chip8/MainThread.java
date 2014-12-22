@@ -12,31 +12,43 @@ public class MainThread extends Thread {
     private boolean running;
     private Cpu cpu;
     private Chip8 c8;
+    private final Object lock = new Object();
 
-    private SurfaceHolder surfaceHolder;
     private MainPanel gamePanel;
 
-    public MainThread(SurfaceHolder surfaceHolder, MainPanel gamePanel, Cpu c, Chip8 c8) {
+    public MainThread(MainPanel gamePanel, Cpu c, Chip8 c8) {
         super();
-        this.surfaceHolder = surfaceHolder;
         this.gamePanel = gamePanel;
         this.cpu = c;
         this.c8 = c8;
     }
 
-    public synchronized void setRunning(boolean running) {
-            this.running = running;
-            System.out.println("running");
+    public void setRunning(boolean running) {
+            synchronized (lock) {
+                this.running = running;
+                System.out.println("running");
+            }
     }
+
+
 
     @Override
     public void run() {
         cpu.init();
         System.out.println("setup");
+        boolean running;
+        synchronized(lock) {
+           running = this.running;
+        }
         while (running) {
             cpu.step();
+            //System.out.println(((Boolean)(c8.get_key_pressed(0))));
             if (c8.graphicsUpdate) {
                 gamePanel.postInvalidate();
+            }
+
+            synchronized(lock) {
+                running = this.running;
             }
         }
     }

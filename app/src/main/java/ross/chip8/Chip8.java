@@ -20,9 +20,7 @@ public class Chip8 {
     Integer gfx[][]; //SCHIP 128*64 pixels, CHIP8 64*32
 
 
-    int keys[] = {'0','1','2','3','4','5','6','7',
-                  '8','9','q','w','e','a','s','d'}; //keypad 0x0-0xF
-    int key_pressed[]; //stores current keys pressed, most recent key stored in index 16
+    final boolean keys_pressed[]; //stores current keys pressed
     long speed; //instructions per second
     boolean debug = false; //debug mode on/off
 
@@ -84,18 +82,21 @@ public class Chip8 {
 	    this.HP48_Flags = new int[8];
 	    this.gfx = new Integer[128][64];
 	    setZero(this.gfx);
-	    this.key_pressed = new int[17];
+	    this.keys_pressed = new boolean[16];
 	    this.mem = new int[4096];
     }
 
 
-    int get_key_value(int key) {
-        int i;
-        for(i = 0; i < 16; i++) {
-            if(keys[i] == key)
-                return i;
+    boolean get_key_pressed(int key) {
+        synchronized(this.keys_pressed) {
+            return keys_pressed[key];
         }
-        return 255;
+    }
+
+    void set_key_pressed(int key, boolean b) {
+        synchronized(this.keys_pressed) {
+            this.keys_pressed[key] = b;
+        }
     }
 
 
